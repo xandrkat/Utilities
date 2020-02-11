@@ -1,0 +1,40 @@
+# Восстановление компонентов хранилища
+DISM /Online /Cleanup-Image /RestoreHealth
+
+# Восстановление компонентов хранилища локально
+DISM /Get-WimInfo /WimFile:E:\sources\install.wim
+DISM /Online /Cleanup-Image /RestoreHealth /Source:E:\sources\install.wim:3 /LimitAccess
+
+# Восстановление компонентов хранилища в среде Windows PE
+DISM /Get-WimInfo /WimFile:E:\sources\install.wim
+DISM /Image:C:\ /Cleanup-Image /RestoreHealth /Source:E:\sources\install.wim:3 /ScratchDir:C:\mnt
+
+# Восстановление системных файлов
+sfc /scannow
+sfc /scannow /offbootdir=C:\ /offwindir=C:\Windows
+
+# Очистка папки WinSxS
+DISM /Online /Cleanup-Image /StartComponentCleanup /ResetBase
+
+# Стать владельцем файла
+takeown /F file
+icacls file /grant:r %username%:F
+# Стать владельцем папки
+takeown /F folder /R
+icacls folder /grant:r %username%:F /T
+
+# Операторы Google
+Только на указанном сайте: site:site.ru
+В заголовке страницы: intitle:"index of"
+В тексте страницы: intext:текст
+В тексте url: inurl:текст
+В тексте ссылок: inanchor:текст
+По расширению ext:pdf
+Со схожей тематикой: related:site.ru
+Ссылки на данный ресурс: link:site.ru
+Кэш страницы: cache:site.ru
+Точная фраза: "site"
+Любой текст: *pedia.org
+Логическое ИЛИ: site1 | site2
+Логическое НЕ: error –warning
+Диапазон: cve 2006..2016
